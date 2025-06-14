@@ -6,21 +6,24 @@ type SelectComponentProps = {
     value: string
   }[]
   placeholder: string
+  onChange: (value: string) => void
 }
 
 export default function SelectComponent(props: SelectComponentProps) {
   return (
-    <Select>
-      <SelectTrigger className="w-full">
-        <SelectValue placeholder={props.placeholder} />
-      </SelectTrigger>
-      <SelectContent>
-        {props.options.map((option) => (
-          <SelectItem key={option.value} value={option.value}>
-            {option.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <>
+      <Select onValueChange={props.onChange}>
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder={props.placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          {props.options.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </>
   )
 }

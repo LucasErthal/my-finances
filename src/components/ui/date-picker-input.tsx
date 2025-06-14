@@ -11,9 +11,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-export function DatePickerInput({ defaultValue }: { defaultValue?: Date }) {
+type DatePickerInputProps = {
+  defaultValue?: Date
+  onChange?: (date: Date) => void
+}
+
+export function DatePickerInput({ defaultValue, onChange }: DatePickerInputProps) {
   const [open, setOpen] = React.useState(false)
-  const [date, setDate] = React.useState<Date | undefined>(defaultValue)
+  const [date, setDate] = React.useState<Date | undefined>(defaultValue ?? undefined);
 
   return (
     <div className="flex flex-col">
@@ -36,6 +41,7 @@ export function DatePickerInput({ defaultValue }: { defaultValue?: Date }) {
             onSelect={(date) => {
               setDate(date)
               setOpen(false)
+              onChange?.(date as Date)
             }}
           />
         </PopoverContent>
