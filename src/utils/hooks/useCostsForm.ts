@@ -16,6 +16,8 @@ export function useCostsForm() {
     register,
     handleSubmit,
     setValue,
+    reset,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(costSchema),
@@ -27,5 +29,5 @@ export function useCostsForm() {
     },
   });
 
-  return { register, handleSubmit, errors, setValue };
+  return { register, handleSubmit, errors, setValue, reset, watch };
 }

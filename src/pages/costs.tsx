@@ -11,13 +11,14 @@ import { useNavigate } from 'react-router';
 import { ArrowLeftIcon } from 'lucide-react';
 
 export default function CostsPage() {
-  const { register, handleSubmit, errors, setValue } = useCostsForm();
+  const { register, handleSubmit, errors, setValue, reset, watch } = useCostsForm();
   const navigate = useNavigate();
 
   async function onSubmit(data: Cost) {
     const response = await costsRepository.create(data);
     if (response.success) {
       toast.success('Cost added successfully');
+      reset();
     } else {
       toast.error('Failed to add cost');
     }
@@ -48,6 +49,7 @@ export default function CostsPage() {
         <div className="flex flex-col gap-1">
           <Label className='font-semibold' htmlFor="category">Cost category</Label>
           <SelectComponent 
+            value={watch('category') || ''}
             onChange={(value) => setValue('category', value)}
             placeholder="Select a category" 
             options={[

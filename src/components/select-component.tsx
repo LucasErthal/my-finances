@@ -7,12 +7,13 @@ type SelectComponentProps = {
   }[]
   placeholder: string
   onChange: (value: string) => void
+  value: string
 }
 
 export default function SelectComponent(props: SelectComponentProps) {
   return (
     <>
-      <Select onValueChange={props.onChange}>
+      <Select value={props.value} onValueChange={props.onChange}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder={props.placeholder} />
         </SelectTrigger>
