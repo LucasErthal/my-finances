@@ -1,13 +1,16 @@
-import db from '@/db';
 import { createCost, getCosts } from '@/db/costs';
+import db from '@/db';
 import { Cost } from '@/db/types';
 
 export const costsRepository = {
   create: async (cost: Cost) => {
-    const newCost = await createCost(cost);
-    console.log(newCost);
+    const response = await createCost(cost);
+
     db.saveDatabase();
-    return newCost;
+
+    return {
+      success: !!response,
+    };
   },
   get: async () => {
     const costs = await getCosts();

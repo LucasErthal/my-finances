@@ -4,26 +4,33 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@radix-ui/react-label';
 import SelectComponent from '@/components/select-component';
 import { costsRepository } from '@/repositories/costs';
-import { useEffect } from 'react';
 import { useCostsForm } from '@/utils/hooks/useCostsForm';
+import { toast } from 'sonner';
 import { Cost } from '@/db/types';
+import { useNavigate } from 'react-router';
+import { ArrowLeftIcon } from 'lucide-react';
 
 export default function CostsPage() {
   const { register, handleSubmit, errors, setValue } = useCostsForm();
-
-  useEffect(() => {
-    costsRepository.get().then((costs) => {
-      console.log(costs);
-    });
-  }, []);
+  const navigate = useNavigate();
 
   async function onSubmit(data: Cost) {
-    await costsRepository.create(data);
+    const response = await costsRepository.create(data);
+    if (response.success) {
+      toast.success('Cost added successfully');
+    } else {
+      toast.error('Failed to add cost');
+    }
   }
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold">Add new cost</h1>
+      <div className="flex items-center gap-1">
+        <Button variant="ghost" onClick={() => navigate(-1)}>
+          <ArrowLeftIcon className="w-5 h-5" />
+        </Button>
+        <h1 className="text-2xl font-bold">Add new cost</h1>
+      </div>
 
       <form className="flex flex-col gap-4 my-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-1">
@@ -64,7 +71,9 @@ export default function CostsPage() {
           {errors.date && <p className="text-red-500">{errors.date.message}</p>}
         </div>
 
-        <Button>Add Cost</Button>
+        <div className="flex justify-end">
+          <Button type="submit">Add Cost</Button>
+        </div>
       </form>
     </div>
   )

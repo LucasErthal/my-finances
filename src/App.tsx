@@ -1,15 +1,11 @@
-import { useEffect } from 'react';
-import CostsPage from './pages/costs'
-/* import db from './db'; */
+import { Toaster } from 'sonner'
+import { Router } from './routes'
 
 function App() {
-  useEffect(() => {
-    /* db.loadDatabase(); */
-  }, []);
-
   return (
     <>
-      <CostsPage />
+      <Router />
+      <Toaster position="bottom-right" richColors duration={2000} />
     </>
   )
 }
